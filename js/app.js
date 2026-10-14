@@ -77,8 +77,7 @@
     $('contacts').innerHTML = CONTACTOS.map(function (c) {
       var d = intlPhone(c.telefono);
       return '<div class="contact"><div><div class="nm">' + esc(c.nombre) + '</div><div class="tl">' + esc(c.telefono) + '</div></div>' +
-        (d ? '<div class="acts"><a class="pill-link" href="tel:+' + d + '">' + icon('phone') + 'Llamar</a>' +
-        '<a class="pill-link" target="_blank" rel="noopener" href="https://wa.me/' + d + '">' + icon('chat') + 'WhatsApp</a></div>' : '') + '</div>';
+        (d ? '<div class="acts"><a class="pill-link" target="_blank" rel="noopener" href="https://wa.me/' + d + '">' + icon('chat') + 'WhatsApp</a></div>' : '') + '</div>';
     }).join('');
     $('iban-txt').textContent = IBAN;
   }

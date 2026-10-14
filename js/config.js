@@ -24,7 +24,7 @@ var IBAN = 'ES00 0000 0000 0000 0000 0000'; // PENDIENTE: IBAN
 
 
 /* ───────────────── 3. Teléfonos de los novios ─────────────────
-   Mientras el teléfono no sea real, NO salen los botones «Llamar» y «WhatsApp».
+   Mientras el teléfono no sea real, NO sale el botón «WhatsApp».
    Escríbelo con el prefijo de país: '+34 600 123 456'. */
 var CONTACTOS = [
   { nombre: 'Laura Cid',      telefono: '+34 620 456 941' },

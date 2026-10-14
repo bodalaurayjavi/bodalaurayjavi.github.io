@@ -1,5 +1,7 @@
 # Sugerencias (no aplicadas)
 
+> Cambios sobre el diseño ya aplicados a petición vuestra: en los contactos solo aparece el botón «WhatsApp» (se quitó «Llamar»).
+
 Cosas que he visto al pasar el diseño a producción. **No he cambiado ninguna**: la web está tal cual el diseño. Decidid vosotros si merece la pena hacer alguna.
 
 ## Contenido
