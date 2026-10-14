@@ -8,20 +8,20 @@ Después de cada cambio, hay que volver a publicar la web (ver «Cómo actualiza
 
 | # | Qué | Archivo y línea | Qué poner |
 |---|---|---|---|
-| 1 | **IBAN** | `js/config.js`, línea 23 | El número de cuenta con espacios cada 4 caracteres: `'ES12 3456 7890 1234 5678 9012'`. Ahora se ve «ES00 0000…» en la web. |
+| 1 | **IBAN** | `js/config.js`, línea 29 | El número de cuenta con espacios cada 4 caracteres: `'ES12 3456 7890 1234 5678 9012'`. Ahora se ve «ES00 0000…» en la web. |
 | 2 | ~~Teléfono de Laura~~ | — | ✅ Hecho (+34 620 456 941). |
-| 3 | **Teléfono de Javier** | `js/config.js`, línea 31 | `telefono: '+34 600 123 456'`. Mientras sea «6XX…» no sale su botón «WhatsApp», pero el texto de relleno sí se ve. |
-| 4 | **URL del Apps Script** (dónde llegan las respuestas) | `js/config.js`, línea 42 | La dirección que acaba en `/exec`. Paso a paso en `apps-script/LEEME.md`. **Sin esto, el formulario no guarda nada:** muestra el resumen para copiarlo a mano. |
+| 3 | **Teléfono de Javier** | `js/config.js`, línea 37 | `telefono: '+34 600 123 456'`. Mientras sea «6XX…» no sale su botón «WhatsApp», pero el texto de relleno sí se ve. |
+| 4 | **URL del Apps Script** (dónde llegan las respuestas) | `js/config.js`, línea 48 | La dirección que acaba en `/exec`. Paso a paso en `apps-script/LEEME.md`. **Sin esto, el formulario no guarda nada:** muestra el resumen para copiarlo a mano. |
+| 5 | **Fecha límite para confirmar** | `js/config.js`, línea 24 | Por ejemplo `'1 de abril de 2027'`. Sale en el formulario: «Por favor, confírmanos tu asistencia antes del …». Vacía, no se muestra. |
 
 ## Autobuses (cuando estén cerrados)
 
 | # | Qué | Archivo y línea | Notas |
 |---|---|---|---|
-| 5 | Hora o texto de la **ida** | `js/config.js`, línea 65 | Ahora: «Al terminar la ceremonia». |
-| 6 | Hora de la **vuelta** | `js/config.js`, línea 75 | Ahora: «00:00 h». |
-| 7 | **Parada de llegada** de la vuelta | `js/config.js`, línea 81 | Ahora: «Ubicación de llegada por definir». Si queda definida, se cambia la `nota` (o se borra con `''`) y se puede añadir un enlace en `mapa`. |
-| 8 | **Más trayectos** (por ejemplo, una segunda vuelta) | `js/config.js`, desde la línea 62 | Copiad un bloque `{ … }` entero, pegadlo debajo separado por una coma y cambiad los datos. Saldrá solo en la página Boda y en el formulario, y en la hoja aparecerá su columna «Plazas · Bus …». |
-| 9 | Texto de la **pregunta del autobús** | `js/config.js`, línea 86 | Ahora dice «desde la iglesia hasta la finca», aunque también se puede elegir la vuelta. Ver SUGERENCIAS. |
+| 6 | Hora o texto de la **ida** | `js/config.js`, línea 71 | Ahora: «Al terminar la ceremonia». |
+| 7 | Hora de la **vuelta** | `js/config.js`, línea 81 | Ahora: «00:00 h». |
+| 8 | **Parada de llegada** de la vuelta | `js/config.js`, línea 87 | Ahora: «Ubicación de llegada por definir». Si queda definida, se cambia la `nota` (o se borra con `''`) y se puede añadir un enlace en `mapa`. |
+| 9 | **Más trayectos** (por ejemplo, una segunda vuelta) | `js/config.js`, desde la línea 68 | Copiad un bloque `{ … }` entero, pegadlo debajo separado por una coma y cambiad los datos. Saldrá solo en la página Boda y en el formulario, y en la hoja aparecerá su columna «Plazas · Bus …». |
 
 **Cuidado:** el `id` de cada trayecto («Ida», «Vuelta») es el título de su columna en la hoja. No lo cambiéis cuando ya haya respuestas.
 
@@ -29,14 +29,14 @@ Después de cada cambio, hay que volver a publicar la web (ver «Cómo actualiza
 
 | # | Qué | Archivo y línea |
 |---|---|---|
-| 10 | **La Valenciana**: en Zamora hay dos heladerías con ese nombre, «Helados La Valenciana» (Av. de Portugal, 2) y «Valenciana Shock» (C. Renova, 15). El enlace lleva a la primera. ¿Es esa? | `js/config.js`, línea 178 |
+| 10 | **La Valenciana**: en Zamora hay dos heladerías con ese nombre, «Helados La Valenciana» (Av. de Portugal, 2) y «Valenciana Shock» (C. Renova, 15). El enlace lleva a la primera. ¿Es esa? | `js/config.js`, línea 193 |
 
 ## Opcional
 
 | Qué | Archivo y línea |
 |---|---|
-| WhatsApp para recibir **también** una copia de cada respuesta | `js/config.js`, línea 43 (`'34600123456'`, sin «+» ni espacios) |
-| Email para recibir **también** una copia de cada respuesta | `js/config.js`, línea 44 |
+| WhatsApp para recibir **también** una copia de cada respuesta | `js/config.js`, línea 49 (`'34600123456'`, sin «+» ni espacios) |
+| Email para recibir **también** una copia de cada respuesta | `js/config.js`, línea 50 |
 
 ---
 

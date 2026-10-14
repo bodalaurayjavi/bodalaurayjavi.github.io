@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Boda Laura y Javier//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:preboda-2027@bodalaurayjavi.github.io
+DTSTAMP:20261014T120000Z
+DTSTART:20270604T183000Z
+DTEND:20270604T210000Z
+SUMMARY:Preboda de Laura y Javier
+LOCATION:Hotel NH Palacio del Duero\, Plaza de la Horta 1\, 49002 Zamora
+DESCRIPTION:Cóctel de 20:30 a 23:00 h. Dress code: chicos\, camisa\; chicas\, cóctel.\nhttps://bodalaurayjavi.github.io/#preboda
+URL:https://bodalaurayjavi.github.io/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Preboda de Laura y Javier
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

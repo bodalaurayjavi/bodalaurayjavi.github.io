@@ -18,6 +18,12 @@
 var FECHA_BODA = '2027-06-05T12:30:00+02:00';
 
 
+/* ───────────────── 1b. Fecha límite para confirmar asistencia ─────────────────
+   Sale en la página del formulario: «Por favor, confírmanos tu asistencia antes del …».
+   Mientras esté vacía ('') no se muestra nada. */
+var FECHA_LIMITE_CONFIRMAR = ''; // PENDIENTE: por ejemplo '1 de abril de 2027'
+
+
 /* ───────────────── 2. Número de cuenta para el regalo ─────────────────
    Escríbelo con espacios cada 4 caracteres, como se quiera ver en la web. */
 var IBAN = 'ES00 0000 0000 0000 0000 0000'; // PENDIENTE: IBAN
@@ -84,8 +90,8 @@ var BUSES = [
 
 /* Textos de la pregunta del autobús en el formulario */
 var PREGUNTA_BUS = {
-  invitado:            '¿Harás uso del servicio de autobuses desde la iglesia hasta la finca?',
-  acompanante:         '¿Hará uso del servicio de autobuses desde la iglesia hasta la finca?',
+  invitado:            '¿Usarás el servicio de autobuses?',
+  acompanante:         '¿Usará tu acompañante el servicio de autobuses?',
   trayectosInvitado:   'Selecciona los trayectos que vayas a necesitar:',
   trayectosAcompanante:'Selecciona los trayectos que vaya a necesitar:'
 };

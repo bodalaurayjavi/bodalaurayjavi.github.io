@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Boda Laura y Javier//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:boda-2027@bodalaurayjavi.github.io
+DTSTAMP:20261014T120000Z
+DTSTART:20270605T103000Z
+DTEND:20270605T220000Z
+SUMMARY:Boda de Laura y Javier
+LOCATION:Iglesia de San Pedro y San Ildefonso\, Plaza de San Ildefonso\, 49001 Zamora
+DESCRIPTION:12:30 h Ceremonia en la Iglesia de San Pedro y San Ildefonso.\nDespués\, celebración en Finca Maradela (autobuses desde el Parque de San Martín).\nhttps://bodalaurayjavi.github.io/#boda
+URL:https://bodalaurayjavi.github.io/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Boda de Laura y Javier
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

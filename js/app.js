@@ -162,6 +162,28 @@
     } catch (e) { fallback(); }
   }
 
+  /* ═════════ Añadir al calendario ═════════
+     iPhone, iPad y Mac abren el archivo .ics (carpeta cal/); el resto, Google Calendar.
+     Si cambian fechas o lugares, hay que cambiarlos aquí y en cal/*.ics. */
+  var EVENTOS = {
+    preboda: { t: 'Preboda de Laura y Javier', d: '20270604T183000Z/20270604T210000Z',
+      l: 'Hotel NH Palacio del Duero, Plaza de la Horta 1, 49002 Zamora',
+      x: 'Cóctel de 20:30 a 23:00 h. https://bodalaurayjavi.github.io/#preboda' },
+    boda: { t: 'Boda de Laura y Javier', d: '20270605T103000Z/20270605T220000Z',
+      l: 'Iglesia de San Pedro y San Ildefonso, Plaza de San Ildefonso, 49001 Zamora',
+      x: '12:30 h Ceremonia. Después, celebración en Finca Maradela. https://bodalaurayjavi.github.io/#boda' }
+  };
+  function initCalendar() {
+    var apple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+    if (apple) return;                                   // se queda el enlace al .ics
+    document.querySelectorAll('a[data-cal]').forEach(function (a) {
+      var e = EVENTOS[a.getAttribute('data-cal')];
+      a.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(e.t) +
+        '&dates=' + e.d + '&location=' + encodeURIComponent(e.l) + '&details=' + encodeURIComponent(e.x) + '&ctz=Europe/Madrid';
+      a.target = '_blank'; a.rel = 'noopener';
+    });
+  }
+
   /* ═════════ Navegación ═════════
      Una "página" por apartado del menú (#inicio, #preboda…).
      #boda/ceremonia y #boda/celebracion abren Boda y bajan a esa tarjeta. */
@@ -175,9 +197,21 @@
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
   }
-  burger.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
+  burger.addEventListener('click', function () {
+    var open = !menu.classList.contains('open'); setMenu(open);
+    if (open) menu.querySelector('a').focus();
+  });
   scrim.addEventListener('click', function () { setMenu(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  document.addEventListener('keydown', function (e) {
+    if (!menu.classList.contains('open')) return;
+    if (e.key === 'Escape') { setMenu(false); burger.focus(); return; }
+    if (e.key !== 'Tab') return;
+    // Con el menú abierto, el tabulador solo recorre el botón y los enlaces del menú
+    var f = [burger].concat(Array.prototype.slice.call(menu.querySelectorAll('a')));
+    var i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && (i === f.length - 1 || i < 0)) { e.preventDefault(); f[0].focus(); }
+  });
 
   function parseHash() {
     var h = decodeURIComponent((location.hash || '').slice(1));
@@ -228,15 +262,21 @@
   /* ═════════ Cuenta atrás ═════════
      La fecha lleva la zona horaria (+02:00), así que da lo mismo desde dónde se mire. */
   var BODA_MS = Date.parse(FECHA_BODA), tickT;
+  var FIN_DIA_MS = BODA_MS + 18 * 3600 * 1000;   // hasta las 06:30 del día siguiente sigue siendo «el día»
   function pad(n) { return String(n).padStart(2, '0'); }
   function tick() {
     if (isNaN(BODA_MS)) return;
-    var s = Math.floor(Math.max(0, BODA_MS - Date.now()) / 1000);
+    var now = Date.now();
+    if (now >= BODA_MS) {
+      $('count').hidden = true;
+      $('hero-eyebrow').textContent = now < FIN_DIA_MS ? '¡Hoy es el día!' : '¡Gracias por acompañarnos!';
+      clearInterval(tickT); return;
+    }
+    var s = Math.floor((BODA_MS - now) / 1000);
     $('cd-d').textContent = Math.floor(s / 86400);
     $('cd-h').textContent = pad(Math.floor(s % 86400 / 3600));
     $('cd-m').textContent = pad(Math.floor(s % 3600 / 60));
     $('cd-s').textContent = pad(s % 60);
-    if (s === 0) clearInterval(tickT);
   }
 
   /* ═════════ Cuestionario (se va desplegando según las respuestas) ═════════ */
@@ -462,8 +502,9 @@
   }
 
   /* ═════════ Arranque ═════════ */
-  $('copy-iban').addEventListener('click', function () { copyText(IBAN, 'Cuenta copiada'); });
-  renderBuses(); renderHotels(); renderZamora(); renderContacts(); initForm();
+  $('copy-iban').addEventListener('click', function () { copyText(IBAN.replace(/\s+/g, ''), 'Cuenta copiada'); });   // sin espacios: algunas apps de banco no los aceptan
+  if (FECHA_LIMITE_CONFIRMAR) { $('form-limit').textContent = 'Por favor, confírmanos tu asistencia antes del ' + FECHA_LIMITE_CONFIRMAR + '.'; $('form-limit').hidden = false; }
+  renderBuses(); renderHotels(); renderZamora(); renderContacts(); initForm(); initCalendar();
   tick(); tickT = setInterval(tick, 1000);
   route();
 })();
