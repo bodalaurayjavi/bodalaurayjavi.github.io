@@ -1,6 +1,8 @@
 # Sugerencias (no aplicadas)
 
-> Cambios sobre el diseño ya aplicados a petición vuestra: en los contactos solo aparece el botón «WhatsApp» (se quitó «Llamar»).
+> Cambios sobre el diseño ya aplicados a petición vuestra:
+> - En los contactos solo aparece el botón «WhatsApp» (se quitó «Llamar»).
+> - Conoce Zamora tiene un mapa ilustrado (datos de OpenStreetMap) con los sitios numerados, y cada tarjeta lleva su número. La Esquina de Colás (Toro) queda fuera del mapa.
 
 Cosas que he visto al pasar el diseño a producción. **No he cambiado ninguna**: la web está tal cual el diseño. Decidid vosotros si merece la pena hacer alguna.
 

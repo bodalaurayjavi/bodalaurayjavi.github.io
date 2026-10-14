@@ -125,44 +125,52 @@ var HOTELES = [
 
 
 /* ───────────────── 7. Conoce Zamora ─────────────────
-   titulo: lo que va entre <em> y </em> sale en dorado.
-   Cada sitio: nombre, texto, busqueda + placeId (Google Maps) y, si hace falta, etiqueta (p. ej. 'En Toro'). */
+   titulo: lo que va entre <em> y </em> sale en dorado. leyenda: nombre corto de la categoría en el mapa.
+   Cada sitio: nombre, texto, busqueda + placeId (Google Maps) y, si hace falta, etiqueta (p. ej. 'En Toro').
+   lat y lng: posición en el mapa ilustrado (se copian de Google Maps: botón derecho sobre el sitio).
+   Los sitios con lat/lng salen numerados en el mapa y en su tarjeta; si no los tienen (como el de Toro), no. */
+
+/* Zona que abarca el dibujo del mapa (img/zamora-mapa-*.webp). No cambiar salvo que se cambie la imagen. */
+var MAPA_ZAMORA = { norte: 41.5108, sur: 41.4978, oeste: -5.7530, este: -5.7380 };
+
 var ZAMORA = [
   {
     titulo: '… <em>tapear</em> como un zamorano',
+    leyenda: 'Tapear',
     sitios: [
-      { nombre: 'La Maja', busqueda: 'La Maja Tortillería, C. Alfonso de Castro 4, 49014 Zamora', placeId: 'ChIJudNvyd4fOQ0RfdzaWZvV49s',
+      { nombre: 'La Maja', busqueda: 'La Maja Tortillería, C. Alfonso de Castro 4, 49014 Zamora', placeId: 'ChIJudNvyd4fOQ0RfdzaWZvV49s', lat: 41.50672, lng: -5.7424589,
         texto: 'Las tortillas de moda en Zamora. Pide la Fromaja, con quesos zamoranos y confitura casera de pimientos de Benavente. Si te gusta la tortilla, aquí hay que parar.' },
-      { nombre: 'La Salita', busqueda: 'Taberna La Salita, C. de los Herreros 34, 49001 Zamora', placeId: 'ChIJ6cKeuCgfOQ0RUoJWLWpZ2aM',
+      { nombre: 'La Salita', busqueda: 'Taberna La Salita, C. de los Herreros 34, 49001 Zamora', placeId: 'ChIJ6cKeuCgfOQ0RUoJWLWpZ2aM', lat: 41.5022297, lng: -5.746408,
         texto: 'El hermano pequeño de Lasal: pequeño, informal y con mucho nivel. Su imprescindible es el montado de pancetaca, aunque merece la pena dejarse recomendar.' },
-      { nombre: 'La Vinacoteca', busqueda: 'La Vinacoteca, C. Cervantes 5, 49013 Zamora', placeId: 'ChIJT4HwMiUeOQ0RsPKbNDT80Wk',
+      { nombre: 'La Vinacoteca', busqueda: 'La Vinacoteca, C. Cervantes 5, 49013 Zamora', placeId: 'ChIJT4HwMiUeOQ0RsPKbNDT80Wk', lat: 41.5098947, lng: -5.7403873,
         texto: 'Para los amantes del buen vino y el producto de aquí. Cecina, embutidos, quesos y sus caprichos de la casa. Aquí la copa de vino también forma parte del tapeo.' },
-      { nombre: 'AttiKo GastroBar', busqueda: 'AttiKo GastroBar, C. de Diego de Losada 2, 49018 Zamora', placeId: 'ChIJr_FS1FMfOQ0R5h-y6-6v0kg',
+      { nombre: 'AttiKo GastroBar', busqueda: 'AttiKo GastroBar, C. de Diego de Losada 2, 49018 Zamora', placeId: 'ChIJr_FS1FMfOQ0R5h-y6-6v0kg', lat: 41.5067309, lng: -5.7396782,
         texto: 'Tapeo moderno y sin complicaciones. Tapas creativas, buenas raciones para compartir y una carta que invita a probar cosas diferentes. Déjate recomendar y pide varias para compartir.' },
-      { nombre: 'El Chillón', busqueda: 'Chillón, C. Diego de Ordax 6, 49003 Zamora', placeId: 'ChIJy4xYFTEeOQ0RpeBHBvVLkUQ',
+      { nombre: 'El Chillón', busqueda: 'Chillón, C. Diego de Ordax 6, 49003 Zamora', placeId: 'ChIJy4xYFTEeOQ0RpeBHBvVLkUQ', lat: 41.5041918, lng: -5.7443929,
         texto: 'Un clásico entre los clásicos. Su tapa estrella es la tortilla de patata con salsa de callos. Si quieres probar una de las combinaciones más zamoranas, esta es obligatoria.' },
-      { nombre: 'Bar Caballero', busqueda: 'Bar Caballero, C. de las Flores de San Torcuato 4, 49014 Zamora', placeId: 'ChIJBwpIZjAeOQ0R9xBHUaqPJgw',
+      { nombre: 'Bar Caballero', busqueda: 'Bar Caballero, C. de las Flores de San Torcuato 4, 49014 Zamora', placeId: 'ChIJBwpIZjAeOQ0R9xBHUaqPJgw', lat: 41.5069523, lng: -5.742526,
         texto: 'Uno de los clásicos de la zona de pinchos. Pide sus famosas patatas mixtas y, si te atreves con la casquería, prueba también los figones o las crestas.' },
-      { nombre: 'Los Caprichos de Meneses', busqueda: 'Los Caprichos de Meneses, Plaza Mayor 3, 49001 Zamora', placeId: 'ChIJE5iAODAeOQ0RvNvBT8FDSwM',
+      { nombre: 'Los Caprichos de Meneses', busqueda: 'Los Caprichos de Meneses, Plaza Mayor 3, 49001 Zamora', placeId: 'ChIJE5iAODAeOQ0RvNvBT8FDSwM', lat: 41.5032565, lng: -5.7472654,
         texto: 'Junto a la Plaza Mayor y con una propuesta algo más elaborada. Pide el suflé de tortilla o la milhoja de bacalao y acompáñalo con un buen vino.' },
-      { nombre: 'El Lobo', busqueda: 'El Lobo - El Rey de los Pinchitos, C. El Horno de San Torcuato 1, 49014 Zamora', placeId: 'ChIJG1PuYjAeOQ0RBWR7Uy_SZG8',
+      { nombre: 'El Lobo', busqueda: 'El Lobo - El Rey de los Pinchitos, C. El Horno de San Torcuato 1, 49014 Zamora', placeId: 'ChIJG1PuYjAeOQ0RBWR7Uy_SZG8', lat: 41.5069671, lng: -5.7429904,
         texto: 'El rey de los pinchos morunos. Pídelos como manda la tradición: "uno que sí y uno que no", con y sin picante. Una parada imprescindible para entender el tapeo zamorano.' },
-      { nombre: 'Al Lío', busqueda: 'Al Lío, C. de los Herreros 27, 49001 Zamora', placeId: 'ChIJe9_CSQAfOQ0R1tdp1Rfs7Rw',
+      { nombre: 'Al Lío', busqueda: 'Al Lío, C. de los Herreros 27, 49001 Zamora', placeId: 'ChIJe9_CSQAfOQ0R1tdp1Rfs7Rw', lat: 41.5023661, lng: -5.7462509,
         texto: 'Otra opción en Los Herreros, pero con un punto más nocturno. Croquetas, choripán de Tudanca y picoteo para empezar la noche o alargar la ruta.' }
     ]
   },
   {
     titulo: '… <em>sentarte a la mesa</em>',
+    leyenda: 'A la mesa',
     sitios: [
-      { nombre: 'Cuzeo', busqueda: 'Cuzeo, C. Rúa los Francos 6, 49001 Zamora', placeId: 'ChIJG9KYZMQfOQ0Rtqq5P_MvXJs',
+      { nombre: 'Cuzeo', busqueda: 'Cuzeo, C. Rúa los Francos 6, 49001 Zamora', placeId: 'ChIJG9KYZMQfOQ0Rtqq5P_MvXJs', lat: 41.5019879, lng: -5.7489019,
         texto: 'Cocina de temporada con producto zamorano y mucho mimo, en pleno casco antiguo. Pide el menú degustación si quieres probar su propuesta completa, o déjate llevar por la carta.' },
-      { nombre: 'Cava Reina', busqueda: 'Cava Reina, C. Reina 3, 49004 Zamora', placeId: 'ChIJNZ30SucfOQ0Rwm8Ze937AVI',
+      { nombre: 'Cava Reina', busqueda: 'Cava Reina, C. Reina 3, 49004 Zamora', placeId: 'ChIJNZ30SucfOQ0Rwm8Ze937AVI', lat: 41.50341, lng: -5.74751,
         texto: 'Restaurante y enoteca en plena Plaza Mayor. Cocina cuidada, producto de la tierra y una carta de vinos enorme. Un sitio para comer bien y alargar la sobremesa.' },
-      { nombre: 'La Sal', busqueda: 'Lasal, C. de los Herreros 29, 49001 Zamora', placeId: 'ChIJAbQVBTQeOQ0Ror1CP37xthM',
+      { nombre: 'La Sal', busqueda: 'Lasal, C. de los Herreros 29, 49001 Zamora', placeId: 'ChIJAbQVBTQeOQ0Ror1CP37xthM', lat: 41.5022866, lng: -5.7462717,
         texto: 'Para una comida o cena más especial. Producto de temporada, cocina cuidada y platos de esos que piden sentarse y disfrutar sin prisas.' },
-      { nombre: 'La Baraka', busqueda: 'Restaurante La Baraka, Calle Sotelo 1, 49006 Zamora', placeId: 'ChIJt6bpxDAeOQ0RizdexDBGTI0',
+      { nombre: 'La Baraka', busqueda: 'Restaurante La Baraka, Calle Sotelo 1, 49006 Zamora', placeId: 'ChIJt6bpxDAeOQ0RizdexDBGTI0', lat: 41.5060099, lng: -5.7446573,
         texto: 'Cocina cuidada y trato cercano en pleno centro. Producto de calidad y una carta para disfrutar sin prisas.' },
-      { nombre: 'Asador Casa Mariano', busqueda: 'Asador Casa Mariano, Av. de Portugal 28, 49016 Zamora', placeId: 'ChIJlZSgLy4eOQ0RpHgyJv5yLqE',
+      { nombre: 'Asador Casa Mariano', busqueda: 'Asador Casa Mariano, Av. de Portugal 28, 49016 Zamora', placeId: 'ChIJlZSgLy4eOQ0RpHgyJv5yLqE', lat: 41.5049191, lng: -5.7400189,
         texto: 'Un asador tradicional donde el lechazo asado es el protagonista. Cocina zamorana de toda la vida, con buenas carnes y especialidades como el bacalao.' },
       { nombre: 'La Esquina de Colás', busqueda: 'Restaurante La Esquina de Colás, Plaza Mayor 24, 49800 Toro, Zamora', placeId: 'ChIJnepqS9OUOA0R2KXL3OKwdIs', etiqueta: 'En Toro',
         texto: 'Si te apetece acercarte a Toro, además de visitar alguna de sus bodegas, apunta este sitio. Se come fenomenal, el producto es muy bueno y el trato es de diez.' }
@@ -170,20 +178,22 @@ var ZAMORA = [
   },
   {
     titulo: '… un buen <em>café y algo dulce</em>',
+    leyenda: 'Café y dulce',
     sitios: [
-      { nombre: 'Atelier Bistrot', busqueda: 'Atelier Bistrot, Av. del Príncipe de Asturias 7, 49013 Zamora', placeId: 'ChIJA8xIYAAfOQ0R0p1owf3LmTY',
+      { nombre: 'Atelier Bistrot', busqueda: 'Atelier Bistrot, Av. del Príncipe de Asturias 7, 49013 Zamora', placeId: 'ChIJA8xIYAAfOQ0R0p1owf3LmTY', lat: 41.5079496, lng: -5.7406216,
         texto: 'Café, té y repostería artesanal. Un rincón tranquilo para desayunar sin prisa o darte un capricho a media tarde.' },
-      { nombre: 'Bendita Dulzura', busqueda: 'Bendita Dulzura, C. Pablo Morillo 2, 49014 Zamora', placeId: 'ChIJxcH2ZXAfOQ0Rl19Vpa4wK1s',
+      { nombre: 'Bendita Dulzura', busqueda: 'Bendita Dulzura, C. Pablo Morillo 2, 49014 Zamora', placeId: 'ChIJxcH2ZXAfOQ0Rl19Vpa4wK1s', lat: 41.5076965, lng: -5.7418937,
         texto: 'Buen café y tartas caseras que no resultan nada empalagosas. De esos sitios en los que siempre apetece pedir un poquito más.' },
       // DUDOSO: hay dos heladerías («Helados La Valenciana», Av. de Portugal 2, y «Valenciana Shock», C. Renova 15). Confirmar cuál.
-      { nombre: 'La Valenciana', busqueda: 'Helados La Valenciana, Av. de Portugal 2, 49015 Zamora', placeId: 'ChIJMUbIQAcfOQ0RXcjGByqMhMg',
+      { nombre: 'La Valenciana', busqueda: 'Helados La Valenciana, Av. de Portugal 2, 49015 Zamora', placeId: 'ChIJMUbIQAcfOQ0RXcjGByqMhMg', lat: 41.5069021, lng: -5.7410887,
         texto: 'Los helados que todo el mundo conoce en Zamora. Artesanos, cremosos y perfectos para darte un capricho después de pasear por el centro.' }
     ]
   },
   {
     titulo: '… <em>comprar</em> en Gottas',
+    leyenda: 'Compras',
     sitios: [
-      { nombre: 'Gottas', busqueda: 'GOTTAS Moda y Piel, C. Rúa los Francos 23, 49001 Zamora', placeId: 'ChIJCTl5l-EfOQ0R1v1XxyF3clc',
+      { nombre: 'Gottas', busqueda: 'GOTTAS Moda y Piel, C. Rúa los Francos 23, 49001 Zamora', placeId: 'ChIJCTl5l-EfOQ0R1v1XxyF3clc', lat: 41.5015588, lng: -5.7494907,
         texto: 'Moda y piel a precios irresistibles. De esas tiendas que se convierten en descubrimiento cuando visitas una ciudad. Y si vas, diles que vienes de parte de Laura y Javier: les hará mucha ilusión.' }
     ]
   }

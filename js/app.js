@@ -54,16 +54,77 @@
     }).join('');
   }
 
-  /* ═════════ Conoce Zamora ═════════ */
+  /* ═════════ Conoce Zamora ═════════
+     Mapa ilustrado con los sitios numerados (los que tienen lat/lng) + tarjetas por categoría. */
+  var IGLESIA_POS = { lat: 41.5004503, lng: -5.7510353 };
+  function mapPos(lat, lng) {
+    var m = MAPA_ZAMORA;
+    return { x: (lng - m.oeste) / (m.este - m.oeste), y: (m.norte - lat) / (m.norte - m.sur) };
+  }
   function renderZamora() {
-    $('zamora-root').innerHTML = ZAMORA.map(function (g) {
+    var num = 0, pins = [];
+    var groups = ZAMORA.map(function (g, gi) {
       return '<div class="zgroup"><h2>' + g.titulo + '</h2>' +
         '<div class="zgrid' + (g.sitios.length === 4 ? ' n4' : '') + '">' + g.sitios.map(function (s) {
+          var url = esc(maps(s.busqueda, s.placeId)), n = '';
+          if (s.lat && s.lng) { n = ++num; pins.push({ n: n, g: gi, nombre: s.nombre, url: url, pos: mapPos(s.lat, s.lng) }); }
           return '<div class="zcard">' + (s.etiqueta ? '<span class="tag">' + esc(s.etiqueta) + '</span>' : '') +
-            '<div class="nm">' + esc(s.nombre) + '</div><div class="q">' + esc(s.texto) + '</div>' +
-            '<a class="pill-link" target="_blank" rel="noopener" href="' + esc(maps(s.busqueda, s.placeId)) + '">' + icon('pin') + 'Cómo llegar</a></div>';
+            '<div class="nm">' + (n ? '<span class="zn">' + n + '.</span> ' : '') + esc(s.nombre) + '</div><div class="q">' + esc(s.texto) + '</div>' +
+            '<a class="pill-link" target="_blank" rel="noopener" href="' + url + '">' + icon('pin') + 'Cómo llegar</a></div>';
         }).join('') + '</div></div>';
     }).join('');
+    var lejos = [];
+    ZAMORA.forEach(function (g) { g.sitios.forEach(function (s) { if (!(s.lat && s.lng)) lejos.push(s.nombre + (s.etiqueta ? ' (' + s.etiqueta.replace(/^En /, 'en ') + ')' : '')); }); });
+    var iglesia = mapPos(IGLESIA_POS.lat, IGLESIA_POS.lng);
+    var mapa = '<figure class="zmap"><div class="zmap-box" id="zmap-box">' +
+      '<picture><source type="image/webp" srcset="img/zamora-mapa-600.webp 600w, img/zamora-mapa-1200.webp 1200w" sizes="(min-width: 760px) 672px, calc(100vw - 36px)">' +
+      '<img src="img/zamora-mapa-1200.jpg" srcset="img/zamora-mapa-600.jpg 600w, img/zamora-mapa-1200.jpg 1200w" sizes="(min-width: 760px) 672px, calc(100vw - 36px)" width="1200" height="1389" loading="lazy" alt="Mapa ilustrado del centro de Zamora con los sitios recomendados numerados"></picture>' +
+      '<svg class="zmap-lines" id="zmap-lines" aria-hidden="true"></svg>' +
+      '<span class="zpin church" data-x="' + iglesia.x + '" data-y="' + iglesia.y + '" data-fixed="1" title="Iglesia de San Pedro y San Ildefonso"><svg class="i"><use href="#i-cross"/></svg></span>' +
+      pins.map(function (p) {
+        return '<a class="zpin g' + p.g + '" href="' + p.url + '" target="_blank" rel="noopener" data-x="' + p.pos.x + '" data-y="' + p.pos.y + '" title="' + esc(p.nombre) + '" aria-label="' + p.n + '. ' + esc(p.nombre) + ': abrir en Google Maps">' + p.n + '</a>';
+      }).join('') +
+      '</div><figcaption>' +
+      '<div class="zmap-legend">' + ZAMORA.map(function (g, gi) { return '<span><i class="zdot g' + gi + '"></i>' + esc(g.leyenda || '') + '</span>'; }).join('') +
+      '<span><i class="zdot church"></i>Iglesia de San Pedro y San Ildefonso</span></div>' +
+      '<p class="zmap-hint">Pulsa un número para abrirlo en Google Maps.' + (lejos.length ? ' Fuera del mapa: ' + esc(lejos.join(', ')) + '.' : '') + '</p>' +
+      '<p class="zmap-attr">Mapa: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">colaboradores de OpenStreetMap</a></p>' +
+      '</figcaption></figure>';
+    $('zamora-root').innerHTML = mapa + groups;
+    var box = $('zmap-box');
+    if (window.ResizeObserver) new ResizeObserver(function () { layoutPins(box); }).observe(box);
+    else window.addEventListener('resize', function () { layoutPins(box); });
+  }
+  /* Coloca los números en el mapa y separa los que se solapan (con una línea hasta su punto real) */
+  function layoutPins(box) {
+    var w = box.clientWidth, h = box.clientHeight; if (!w || !h) return;
+    var els = box.querySelectorAll('.zpin'), R = 13, MIN = 2 * R + 2;
+    var P = Array.prototype.map.call(els, function (el) {
+      var ax = +el.getAttribute('data-x') * w, ay = +el.getAttribute('data-y') * h;
+      return { el: el, ax: ax, ay: ay, x: ax, y: ay, fixed: el.hasAttribute('data-fixed') };
+    });
+    for (var it = 0; it < 300; it++) {
+      for (var i = 0; i < P.length; i++) for (var j = i + 1; j < P.length; j++) {
+        var a = P[i], b = P[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy);
+        if (d >= MIN) continue;
+        if (d < .01) { dx = Math.cos(i + j); dy = Math.sin(i + j); d = 1; }
+        var push = (MIN - d) / (a.fixed || b.fixed ? 1 : 2), ux = dx / d, uy = dy / d;
+        if (!a.fixed) { a.x -= ux * push; a.y -= uy * push; }
+        if (!b.fixed) { b.x += ux * push; b.y += uy * push; }
+      }
+      P.forEach(function (p) {
+        if (p.fixed) return;
+        p.x += (p.ax - p.x) * .02; p.y += (p.ay - p.y) * .02;
+        p.x = Math.min(w - R, Math.max(R, p.x)); p.y = Math.min(h - R, Math.max(R, p.y));
+      });
+    }
+    var lines = '';
+    P.forEach(function (p) {
+      p.el.style.left = p.x + 'px'; p.el.style.top = p.y + 'px';
+      if (Math.abs(p.x - p.ax) + Math.abs(p.y - p.ay) > 4)
+        lines += '<line x1="' + p.ax.toFixed(1) + '" y1="' + p.ay.toFixed(1) + '" x2="' + p.x.toFixed(1) + '" y2="' + p.y.toFixed(1) + '"/><circle cx="' + p.ax.toFixed(1) + '" cy="' + p.ay.toFixed(1) + '" r="2.6"/>';
+    });
+    var svg = $('zmap-lines'); svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h); svg.innerHTML = lines;
   }
 
   /* ═════════ Regalo y contactos ═════════ */
