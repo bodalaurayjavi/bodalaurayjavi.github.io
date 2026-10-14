@@ -9,8 +9,8 @@ Después de cada cambio, hay que volver a publicar la web (ver «Cómo actualiza
 | # | Qué | Archivo y línea | Qué poner |
 |---|---|---|---|
 | 1 | **IBAN** | `js/config.js`, línea 23 | El número de cuenta con espacios cada 4 caracteres: `'ES12 3456 7890 1234 5678 9012'`. Ahora se ve «ES00 0000…» en la web. |
-| 2 | **Teléfono de Laura** | `js/config.js`, línea 30 | `telefono: '+34 600 123 456'`. Mientras sea «6XX…» no salen los botones «Llamar» ni «WhatsApp», pero el texto de relleno sí se ve. |
-| 3 | **Teléfono de Javier** | `js/config.js`, línea 31 | Igual que el anterior. |
+| 2 | ~~Teléfono de Laura~~ | — | ✅ Hecho (+34 620 456 941). |
+| 3 | **Teléfono de Javier** | `js/config.js`, línea 31 | `telefono: '+34 600 123 456'`. Mientras sea «6XX…» no salen sus botones «Llamar» ni «WhatsApp», pero el texto de relleno sí se ve. |
 | 4 | **URL del Apps Script** (dónde llegan las respuestas) | `js/config.js`, línea 42 | La dirección que acaba en `/exec`. Paso a paso en `apps-script/LEEME.md`. **Sin esto, el formulario no guarda nada:** muestra el resumen para copiarlo a mano. |
 
 ## Autobuses (cuando estén cerrados)

@@ -27,7 +27,7 @@ var IBAN = 'ES00 0000 0000 0000 0000 0000'; // PENDIENTE: IBAN
    Mientras el teléfono no sea real, NO salen los botones «Llamar» y «WhatsApp».
    Escríbelo con el prefijo de país: '+34 600 123 456'. */
 var CONTACTOS = [
-  { nombre: 'Laura Cid',      telefono: '+34 6XX XXX XXX' }, // PENDIENTE: teléfono Laura
+  { nombre: 'Laura Cid',      telefono: '+34 620 456 941' },
   { nombre: 'Javier Gironés', telefono: '+34 6XX XXX XXX' }  // PENDIENTE: teléfono Javier
 ];
 
