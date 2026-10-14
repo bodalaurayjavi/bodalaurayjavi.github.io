@@ -42,9 +42,9 @@ Después de cada cambio, hay que volver a publicar la web (ver «Cómo actualiza
 
 ## Cómo actualizar la web después de un cambio
 
-La web está en **https://mariacortizasarnoso-max.github.io/boda-laura-javier/** y se publica sola cada vez que se guarda un cambio en GitHub. No hace falta instalar nada: se hace desde el navegador.
+La web está en **https://bodalaurayjavi.github.io/** y se publica sola cada vez que se guarda un cambio en GitHub. No hace falta instalar nada: se hace desde el navegador.
 
-1. Entrad en **https://github.com/mariacortizasarnoso-max/boda-laura-javier** con la cuenta de GitHub.
+1. Entrad en **https://github.com/bodalaurayjavi/bodalaurayjavi.github.io** con la cuenta de GitHub.
 2. Pulsad la carpeta **`js`** y después el archivo **`config.js`**.
 3. Arriba a la derecha del archivo, pulsad el **lápiz ✏️** («Edit this file»).
 4. Buscad lo que queráis cambiar: **Ctrl+F** en Windows o **Cmd+F** en Mac, y escribid «PENDIENTE». Cambiad **solo lo que va entre comillas** `'…'`.
