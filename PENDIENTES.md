@@ -1,60 +1,52 @@
-# Lo que falta por rellenar
+# Cómo cambiar la web
 
-Casi todo se cambia en **`js/config.js`**. Se puede abrir con cualquier editor de texto (Bloc de notas, TextEdit…). Las instrucciones están dentro del propio archivo; buscad la palabra **PENDIENTE**.
+La web está en **https://bodalaurayjavi.github.io/** y es un solo archivo: **`index.html`**. Lleva las fotos dentro, por eso pesa unos 4 MB.
 
-Después de cada cambio, hay que volver a publicar la web (ver «Cómo actualizar» al final).
+Los datos que más se cambian están todos juntos al principio del código, en el bloque **`var CONFIG = { … }`** (hacia la línea 991 de `index.html`). Para encontrarlo, buscad **`var CONFIG`** con Ctrl+F (Windows) o Cmd+F (Mac).
 
-## Imprescindible antes de compartir el enlace
+## Qué hay en `var CONFIG`
 
-| # | Qué | Archivo y línea | Qué poner |
-|---|---|---|---|
-| 1 | **IBAN** | `js/config.js`, línea 29 | El número de cuenta con espacios cada 4 caracteres: `'ES12 3456 7890 1234 5678 9012'`. Ahora se ve «ES00 0000…» en la web. |
-| 2 | ~~Teléfono de Laura~~ | — | ✅ Hecho (+34 620 456 941). |
-| 3 | **Teléfono de Javier** | `js/config.js`, línea 37 | `telefono: '+34 600 123 456'`. Mientras sea «6XX…» no sale su botón «WhatsApp», pero el texto de relleno sí se ve. |
-| 4 | **URL del Apps Script** (dónde llegan las respuestas) | `js/config.js`, línea 48 | La dirección que acaba en `/exec`. Paso a paso en `apps-script/LEEME.md`. **Sin esto, el formulario no guarda nada:** muestra el resumen para copiarlo a mano. |
-| 5 | **Fecha límite para confirmar** | `js/config.js`, línea 24 | Por ejemplo `'1 de abril de 2027'`. Sale en el formulario: «Por favor, confírmanos tu asistencia antes del …». Vacía, no se muestra. |
-
-## Autobuses (cuando estén cerrados)
-
-| # | Qué | Archivo y línea | Notas |
-|---|---|---|---|
-| 6 | Hora o texto de la **ida** | `js/config.js`, línea 71 | Ahora: «Al terminar la ceremonia». |
-| 7 | Hora de la **vuelta** | `js/config.js`, línea 81 | Ahora: «00:00 h». |
-| 8 | **Parada de llegada** de la vuelta | `js/config.js`, línea 87 | Ahora: «Ubicación de llegada por definir». Si queda definida, se cambia la `nota` (o se borra con `''`) y se puede añadir un enlace en `mapa`. |
-| 9 | **Más trayectos** (por ejemplo, una segunda vuelta) | `js/config.js`, desde la línea 68 | Copiad un bloque `{ … }` entero, pegadlo debajo separado por una coma y cambiad los datos. Saldrá solo en la página Boda y en el formulario, y en la hoja aparecerá su columna «Plazas · Bus …». |
-
-**Cuidado:** el `id` de cada trayecto («Ida», «Vuelta») es el título de su columna en la hoja. No lo cambiéis cuando ya haya respuestas.
-
-## Para confirmar
-
-| # | Qué | Archivo y línea |
+| Dato | Qué es | Valor actual |
 |---|---|---|
-| 10 | **La Valenciana**: en Zamora hay dos heladerías con ese nombre, «Helados La Valenciana» (Av. de Portugal, 2) y «Valenciana Shock» (C. Renova, 15). El enlace lleva a la primera. ¿Es esa? | `js/config.js`, línea 193 |
+| `emailRespuestas` | Correo que sale en el botón «Enviar por email» de la pantalla de gracias. | `familiagironescid@gmail.com` |
+| `web3formsKey` | Clave de Web3Forms. Con ella, las respuestas del formulario llegan solas a familiagironescid@gmail.com al pulsar «Enviar». **No la borréis.** | `3ecbced9-…` |
+| `whatsappRespuestas` | WhatsApp para el botón «Enviar por WhatsApp» (con prefijo, sin «+» ni espacios: `'34600123456'`). Vacío = se usa el teléfono de Laura. | vacío |
+| `iban` | Número de cuenta que se ve y se copia en la web. | `ES81 0182 5322 2000 0454 1196` |
+| `contactos` | Nombre y teléfono de Laura y de Javier. | Laura: +34 620 456 941 · Javier: +34 608 075 973 |
+| `formUrl` | Solo si algún día queréis usar un formulario externo (Google Forms, Typeform…) en lugar del de la web. | vacío |
 
-## Opcional
+Cambiad **solo lo que va entre comillas** `'…'` y no borréis las comas del final de cada línea.
 
-| Qué | Archivo y línea |
-|---|---|
-| WhatsApp para recibir **también** una copia de cada respuesta | `js/config.js`, línea 49 (`'34600123456'`, sin «+» ni espacios) |
-| Email para recibir **también** una copia de cada respuesta | `js/config.js`, línea 50 |
+Otros textos (horarios del autobús, hoteles, sitios de Zamora…) están escritos directamente más abajo en `index.html`. Buscadlos con Ctrl+F / Cmd+F por una palabra que aparezca en la web.
 
----
+## Las respuestas del formulario
+
+- Cuando un invitado pulsa **Enviar**, el resumen llega a **familiagironescid@gmail.com** con el asunto «Confirmación boda · Nombre Apellidos». El invitado ve «¡Recibido! Ya nos han llegado tus respuestas.».
+- Si el envío falla (sin conexión, Web3Forms caído…), el invitado ve botones para mandarlo por WhatsApp, por email o copiarlo.
+- Lo gestiona **Web3Forms** (web3forms.com), con la cuenta de familiagironescid@gmail.com. El plan gratuito tiene un límite mensual de envíos de sobra para una boda.
+- Si alguna respuesta va a Spam, marcadla como «No es spam» para que las siguientes lleguen a la bandeja de entrada.
 
 ## Cómo actualizar la web después de un cambio
 
-La web está en **https://bodalaurayjavi.github.io/** y se publica sola cada vez que se guarda un cambio en GitHub. No hace falta instalar nada: se hace desde el navegador.
+Se publica sola cada vez que se guarda un cambio en GitHub. No hace falta instalar nada: se hace desde el navegador.
 
 1. Entrad en **https://github.com/bodalaurayjavi/bodalaurayjavi.github.io** con la cuenta de GitHub.
-2. Pulsad la carpeta **`js`** y después el archivo **`config.js`**.
-3. Arriba a la derecha del archivo, pulsad el **lápiz ✏️** («Edit this file»).
-4. Buscad lo que queráis cambiar: **Ctrl+F** en Windows o **Cmd+F** en Mac, y escribid «PENDIENTE». Cambiad **solo lo que va entre comillas** `'…'`.
-5. Arriba a la derecha, pulsad el botón verde **Commit changes…**. En «Commit message», escribid qué habéis cambiado (por ejemplo «Añadir IBAN») y pulsad **Commit changes**.
+2. Pulsad el archivo **`index.html`**.
+3. Arriba a la derecha del archivo, pulsad el **lápiz ✏️** («Edit this file»). Como el archivo es grande, puede tardar unos segundos en abrirse.
+4. Buscad lo que queráis cambiar con **Ctrl+F** (Windows) o **Cmd+F** (Mac), por ejemplo `var CONFIG`. Cambiad **solo lo que va entre comillas** `'…'`.
+5. Arriba a la derecha, pulsad el botón verde **Commit changes…**. En «Commit message», escribid qué habéis cambiado (por ejemplo «Cambiar horario autobús») y pulsad **Commit changes**.
 6. Esperad **1–2 minutos** y recargad la web. Si no veis el cambio, recargad forzando: Ctrl+Shift+R en Windows o Cmd+Shift+R en Mac. En el móvil, cerrad la pestaña y volved a abrirla.
+
+**Importante:** no toquéis las líneas larguísimas que contienen `data:image/jpeg;base64,…`: son las fotos. Si se borra un trozo, esa foto deja de verse.
 
 **Si algo se rompe** (por ejemplo, la web sale en blanco), casi siempre es una coma o una comilla borrada sin querer:
 
-1. En GitHub, abrid `config.js` y pulsad **History** (el reloj, arriba a la derecha).
+1. En GitHub, abrid `index.html` y pulsad **History** (el reloj, arriba a la derecha).
 2. Abrid el cambio anterior y comparad.
 3. Corregid con el lápiz como antes, o pedid ayuda pasando el enlace del cambio.
 
 Para ver si la publicación ha terminado, mirad la pestaña **Actions** del repositorio: un círculo verde ✓ significa que ya está publicada.
+
+## Archivos antiguos
+
+Las carpetas `css/`, `js/`, `img/`, `fonts/`, `cal/` y `apps-script/`, y el archivo `SUGERENCIAS.md`, son de la versión anterior de la web. La web actual no los usa. Se pueden dejar o borrar; si se borran, siguen en el historial de GitHub.
