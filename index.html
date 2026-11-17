@@ -995,6 +995,7 @@ var CONFIG = {
   // Destino de las respuestas del cuestionario. Si dejas el WhatsApp vacío se usa el teléfono de Laura.
   whatsappRespuestas: '',      // ej. '34600123456' (con prefijo, sin +)
   emailRespuestas: 'familiagironescid@gmail.com',
+  web3formsKey: '3ecbced9-0659-4fef-922a-01be50b87934',            // clave de Web3Forms (las respuestas llegan solas al email)
   iban: 'ES81 0182 5322 2000 0454 1196',
   contactos: [
     { nombre: 'Laura Cid',      tel: '+34 620 456 941' },
@@ -1500,23 +1501,25 @@ function tick() {
       form.hidden = true; done.hidden = false; window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    if (!CONFIG.web3formsKey) { mostrarGracias(false); return; }
     var ctrl = window.AbortController ? new AbortController() : null;
-    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 45000);
-    fetch('https://formsubmit.co/ajax/familiagironescid@gmail.com', {
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 20000);
+    fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        _subject: 'Confirmación boda · ' + nombreCompleto,
+        access_key: CONFIG.web3formsKey,
+        subject: 'Confirmación boda · ' + nombreCompleto,
+        from_name: 'Web de la boda',
         nombre: g('f-nombre'),
         apellidos: g('f-apellidos'),
         asiste: no ? 'No' : 'Sí',
-        respuestas: txt,
-        _template: 'box'
+        respuestas: txt
       }),
       signal: ctrl ? ctrl.signal : undefined
     })
       .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) { clearTimeout(timer); mostrarGracias(!!d && String(d.success) === 'true'); })
+      .then(function (d) { clearTimeout(timer); mostrarGracias(!!d && d.success === true); })
       .catch(function () { clearTimeout(timer); mostrarGracias(false); });
   });
   $('edit-again').addEventListener('click', function (e) { e.preventDefault(); done.hidden = true; form.hidden = false; window.scrollTo(0, 0); });
