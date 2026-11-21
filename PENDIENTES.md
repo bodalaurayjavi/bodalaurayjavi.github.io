@@ -11,7 +11,7 @@ Los datos que más se cambian están todos juntos al principio del código, en e
 | `emailRespuestas` | Correo que sale en el botón «Enviar por email» de la pantalla de gracias. | `familiagironescid@gmail.com` |
 | `web3formsKey` | Clave de Web3Forms. Con ella, las respuestas del formulario llegan solas a familiagironescid@gmail.com al pulsar «Enviar». **No la borréis.** | `3ecbced9-…` |
 | `whatsappRespuestas` | WhatsApp para el botón «Enviar por WhatsApp» (con prefijo, sin «+» ni espacios: `'34600123456'`). Vacío = se usa el teléfono de Laura. | vacío |
-| `iban` | Número de cuenta que se ve y se copia en la web. | `ES81 0182 5322 2000 0454 1196` |
+| `iban` | Número de cuenta que se ve y se copia en la web. | `ES24 0081 5342 3100 0147 1948` |
 | `contactos` | Nombre y teléfono de Laura y de Javier. | Laura: +34 620 456 941 · Javier: +34 608 075 973 |
 | `formUrl` | Solo si algún día queréis usar un formulario externo (Google Forms, Typeform…) en lugar del de la web. | vacío |
 
